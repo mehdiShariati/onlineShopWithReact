@@ -50,9 +50,9 @@ render(){
 <div className="directory-menu">
 {
 
-this.state.menuItems.map(({title,id,imageUrl,size})=>{
+this.state.menuItems.map(({id,...OtherState})=>{
 
-  return  <MenuItem key={id} title={title.toUpperCase()} subtitle="ShopNow" image={imageUrl} size={size} />
+  return  <MenuItem key={id} {...OtherState} />
 
 
 })
