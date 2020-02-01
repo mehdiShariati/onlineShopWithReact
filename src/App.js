@@ -5,7 +5,7 @@ import Homepage from "./pages/homepage/homePage.component";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./component/header/header.component";
 import SignInAndSignUp from "./pages/SignIn-SignUp/SignIn-SignUp.component";
-import {auth} from "./firebase/firebase.utils";
+import {auth,createUserProfileDocument} from "./firebase/firebase.utils";
 
 
 
@@ -19,9 +19,25 @@ constructor(){
 }
 unSubscribeFromAuth=null;
 componentDidMount(){
-this.unSubscribeFromAuth=auth.onAuthStateChanged(user=>{
-  this.setState({currentUser:user})
-  console.log(user);
+this.unSubscribeFromAuth=auth.onAuthStateChanged(async userAuth=>{
+  if(userAuth){
+   const UserRef= await createUserProfileDocument(userAuth);
+ UserRef.onSnapshot(snapshot=>{
+   this.setState({
+     currentUser:{
+       id:snapshot.id,
+       ...snapshot.data()
+     }
+   })
+ });
+  }else{
+
+    this.setState({
+      currentUser:null
+    });
+  }
+
+ 
 })
 
 }
@@ -43,6 +59,7 @@ componentWillUnmount(){
           
             <Route exact  path="/" component={Homepage} />
             <Route  path="/shop" component={ShopPage} />
+            
             <Route  path="/signIn" component={SignInAndSignUp} />
           
           </Switch>
