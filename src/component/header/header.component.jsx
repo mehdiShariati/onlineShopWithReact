@@ -17,6 +17,10 @@ Shop
 <Link to="/contact" className="option">
 Contact
 </Link>
+
+<Link to="/signIn" className="option">
+SignIn
+</Link>
 </div>
 </div>
 
