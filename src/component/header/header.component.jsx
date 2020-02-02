@@ -5,7 +5,10 @@ import "./header.style.scss";
 import {auth} from "../../firebase/firebase.utils";
 import {connect} from "react-redux";
 import setCurrentUser from "../../redux/user/user.action";
-const Header=({currentUser})=>(
+import CartIcon from "../cart-icon/cart-icon.component";
+
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+const Header=({currentUser,hidden})=>(
 <div className="header">
 <Link to="/" className="logo-container">
 <img src={logo} alt="logo" className="logo" />
@@ -26,8 +29,13 @@ Contact
     SignIn
     </Link>
 }
-
+<CartIcon />
 </div>
+{
+    hidden ? null :  (<CartDropdown />)
+}
+
+
 </div>
 
 
@@ -35,8 +43,12 @@ Contact
 const mapDispatchToprops=dispatch=>({
     setCurrentUser:user=>dispatch(setCurrentUser(user))
 })
+const mapStatetoProps=({user:{currentUser},cart:{hidden}})=>({
+    currentUser,
+    hidden
+});
 
 
 
 
-export default connect(null,mapDispatchToprops)(Header);
+export default connect(mapStatetoProps,mapDispatchToprops)(Header);
