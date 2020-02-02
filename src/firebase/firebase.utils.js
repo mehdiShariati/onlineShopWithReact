@@ -36,7 +36,7 @@ const config={
                 ...additionalData
             })
         }catch(error){
-            console.log('something is happednd'+" "+error.message);
+            console.log(error.message);
         }
 
      

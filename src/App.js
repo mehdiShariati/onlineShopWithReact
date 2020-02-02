@@ -29,18 +29,17 @@ this.unSubscribeFromAuth=auth.onAuthStateChanged(async userAuth=>{
      }
    })
  });
-  }else{
-setCurrentUser({
-  currentUser:null
-})
-    
   }
+
+  setCurrentUser(userAuth);
+    
+  
   
 
  
 })
 
-}
+} 
 componentWillUnmount(){
   this.unSubscribeFromAuth();
 }
@@ -54,7 +53,7 @@ componentWillUnmount(){
     const {currentUser}=this.props;
     return (
       <div>
-        <Header  />
+        <Header currentUser={currentUser} />
      
           <Switch>
           

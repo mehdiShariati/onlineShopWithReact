@@ -32,19 +32,11 @@ Contact
 
 
 );
-const mapStatetoProps=state=>({
-    currentUser:state.user.currentUser
+const mapDispatchToprops=dispatch=>({
+    setCurrentUser:user=>dispatch(setCurrentUser(user))
 })
 
-const mapDispatchToProps=dispatch=>({
-    setCurrentUser:user=>dispatch(setCurrentUser(user))
-  })
 
-const handleSignOut=()=>{
-    auth.signOut();
-    this.props.setCurrentUser({
-        currentUser:null
-    });
-}
 
-export default connect(mapStatetoProps,mapDispatchToProps)(Header);
+
+export default connect(null,mapDispatchToprops)(Header);
