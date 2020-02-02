@@ -3,7 +3,8 @@ import logo from "../../assets/logo.svg";
 import {Link} from "react-router-dom";
 import "./header.style.scss";
 import {auth} from "../../firebase/firebase.utils";
-
+import {connect} from "react-redux";
+import setCurrentUser from "../../redux/user/user.action";
 const Header=({currentUser})=>(
 <div className="header">
 <Link to="/" className="logo-container">
@@ -31,5 +32,19 @@ Contact
 
 
 );
+const mapStatetoProps=state=>({
+    currentUser:state.user.currentUser
+})
 
-export default Header;
+const mapDispatchToProps=dispatch=>({
+    setCurrentUser:user=>dispatch(setCurrentUser(user))
+  })
+
+const handleSignOut=()=>{
+    auth.signOut();
+    this.props.setCurrentUser({
+        currentUser:null
+    });
+}
+
+export default connect(mapStatetoProps,mapDispatchToProps)(Header);
