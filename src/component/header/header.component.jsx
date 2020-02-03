@@ -44,6 +44,7 @@ const mapDispatchToprops=dispatch=>({
     setCurrentUser:user=>dispatch(setCurrentUser(user))
 })
 const mapStatetoProps=({user:{currentUser},cart:{hidden}})=>({
+       
     currentUser,
     hidden
 });
