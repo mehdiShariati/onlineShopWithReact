@@ -6,9 +6,12 @@ import ShopPage from "./pages/shop/shop.component";
 import Header from "./component/header/header.component";
 import SignInAndSignUp from "./pages/SignIn-SignUp/SignIn-SignUp.component";
 import {auth,createUserProfileDocument} from "./firebase/firebase.utils";
-
+import {selectCurrentUser} from "./redux/user/user.selectors";
 import {connect} from "react-redux";
+import {createStructuredSelector} from "reselect";
 import setCurrentUser from "./redux/user/user.action";
+
+import CheckoutPage from "./pages/checkout/checkout.component";
 
 
 
@@ -61,7 +64,7 @@ componentWillUnmount(){
             <Route  path="/shop" component={ShopPage} />
             
             <Route exact path="/signIn"  render={()=> currentUser ? (<Redirect to="/" />) :  (<SignInAndSignUp />) } />
-          
+            <Route exact path="/checkout" component={CheckoutPage} />
           </Switch>
   </div>
     );
@@ -70,8 +73,8 @@ componentWillUnmount(){
   }
 
 }
-const mapStatetoProps=state=>({
-  currentUser:state.user.currentUser
+const mapStatetoProps=createStructuredSelector({
+  currentUser:selectCurrentUser
 });
 const mapDispatchToProps=dispatch=>({
   setCurrentUser:user=>dispatch(setCurrentUser(user))

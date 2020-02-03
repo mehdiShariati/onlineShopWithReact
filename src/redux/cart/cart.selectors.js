@@ -10,3 +10,10 @@ export const selectCartItemsCount=createSelector([selectCartItems],cartItems=>
     accumalatedQuantity+cartItem.quantity,0)
     
     );
+    export const selectHiddenState=createSelector([selectCart],cart=>cart.hidden);
+
+    export const selectCartTotal=createSelector([selectCartItems],cartItems=>
+        cartItems.reduce((accumalatedQuantity,cartItem)=>
+        accumalatedQuantity+cartItem.quantity * cartItem.price ,0)
+        );
+    
