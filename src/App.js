@@ -15,7 +15,6 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 
 
 
-
 class App extends Component {
 
 unSubscribeFromAuth=null;
@@ -74,7 +73,8 @@ componentWillUnmount(){
 
 }
 const mapStatetoProps=createStructuredSelector({
-  currentUser:selectCurrentUser
+  currentUser:selectCurrentUser,
+ 
 });
 const mapDispatchToProps=dispatch=>({
   setCurrentUser:user=>dispatch(setCurrentUser(user))

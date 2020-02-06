@@ -45,6 +45,41 @@ const config={
  
 }
 
+    export const addCollectionAndDocuments=async (collectionKey,objectsToadd)=>{
+        const collectionRef=firestore.collection(collectionKey);
+        
+        const batch=firestore.batch();
+        objectsToadd.forEach(obj=>{
+            const newDocRef=collectionRef.doc();
+            batch.set(newDocRef,obj)
+        })
+      return await  batch.commit();
+
+
+    }
+
+    export const converCollectionsSnapshotToMap=snapshot=>{
+     const transformedCollection= snapshot.docs.map(col=>{
+         const {title,items}=col.data();
+
+         return {
+             routeName:encodeURI(title.toLowerCase()),
+             id:col.id,
+             title,
+             items
+         }
+
+     })
+
+     return transformedCollection.reduce((accumulator,collection)=>{
+
+        accumulator[collection.title.toLowerCase()]=collection;
+
+        return accumulator;
+
+     },{})
+
+    }
 
   export const auth=firebase.auth();
   export const firestore=firebase.firestore();
