@@ -32,6 +32,12 @@ case CartActionTypes.TOGGLE_CART_HIDDEN:
                     ...state,
                     cartItems: RemoveItemFromCart(state.cartItems,action.payload)
                 };
+
+                case CartActionTypes.CLEAR_CART:
+                    return{
+                        ...state,
+                        cartItems:[]
+                    }
     
             
 

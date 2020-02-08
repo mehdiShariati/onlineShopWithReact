@@ -88,4 +88,14 @@ const config={
 
   provider.setCustomParameters({prompt:'select_account'});
   export const signInWithGoogle=()=>auth.signInWithPopup(provider);
+
+    export const getCurrentUser=()=>{
+        return new Promise((resolve,reject)=>{
+            const unSubscribe=auth.onAuthStateChanged(userAuth=>{
+                unSubscribe();
+                resolve(userAuth)
+            },reject)
+        })
+    }
+
   export default firebase;

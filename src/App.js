@@ -9,7 +9,7 @@ import {auth,createUserProfileDocument} from "./firebase/firebase.utils";
 import {selectCurrentUser} from "./redux/user/user.selectors";
 import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
-import setCurrentUser from "./redux/user/user.action";
+import {setCurrentUser,checkuserSession} from "./redux/user/user.action";
 
 import CheckoutPage from "./pages/checkout/checkout.component";
 
@@ -17,35 +17,39 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 
 class App extends Component {
 
-unSubscribeFromAuth=null;
-componentDidMount(){
-  const {setCurrentUser}=this.props;
-this.unSubscribeFromAuth=auth.onAuthStateChanged(async userAuth=>{
-  if(userAuth){
-   const UserRef= await createUserProfileDocument(userAuth);
- UserRef.onSnapshot(snapshot=>{
-  setCurrentUser ({
-     currentUser:{
-       id:snapshot.id,
-       ...snapshot.data()
-     }
-   })
- });
-  }
+//unSubscribeFromAuth=null;
+// componentDidMount(){
+// //   const {setCurrentUser}=this.props;
+// // this.unSubscribeFromAuth=auth.onAuthStateChanged(async userAuth=>{
+// //   if(userAuth){
+// //    const UserRef= await createUserProfileDocument(userAuth);
+// //  UserRef.onSnapshot(snapshot=>{
+// //   setCurrentUser ({
+// //      currentUser:{
+// //        id:snapshot.id,
+// //        ...snapshot.data()
+// //      }
+// //    })
+// //  });
+// //   }
 
-  setCurrentUser(userAuth);
+// //   setCurrentUser(userAuth);
     
   
   
 
  
-})
+// })
 
-} 
-componentWillUnmount(){
-  this.unSubscribeFromAuth();
+
+// componentWillUnmount(){
+//   this.unSubscribeFromAuth();
+// }
+
+componentDidMount(){
+  const {checkuserSession}=this.props;
+  checkuserSession();
 }
-
 
 
 
@@ -56,7 +60,7 @@ componentWillUnmount(){
     return (
       <div>
         <Header currentUser={currentUser} />
-     
+         
           <Switch>
           
             <Route exact  path="/" component={Homepage} />
@@ -72,12 +76,14 @@ componentWillUnmount(){
   }
 
 }
+
 const mapStatetoProps=createStructuredSelector({
   currentUser:selectCurrentUser,
+})
  
-});
+// });
 const mapDispatchToProps=dispatch=>({
-  setCurrentUser:user=>dispatch(setCurrentUser(user))
+  checkuserSession:()=>dispatch(checkuserSession())
 })
 
 export default connect(mapStatetoProps,mapDispatchToProps)(App);
