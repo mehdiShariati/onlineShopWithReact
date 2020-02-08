@@ -17,3 +17,7 @@ export const fetchShoppingDataAsArray=createSelector([fetchShoppingData],
     
     
     )
+
+    export const selectIsCollectionFetching=createSelector([callshopdata],shop=>shop.isFetching);
+
+    export const selectIsCollectionNull=createSelector([callshopdata],shop=>!!shop.collection);
